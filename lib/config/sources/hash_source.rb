@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Config
   module Sources
     class HashSource

@@ -1,16 +1,18 @@
-require 'spec_helper'
-require 'dry-validation'
+# frozen_string_literal: true
+
+require "spec_helper"
+require "dry-validation"
 
 describe Config do
-  context 'validation' do
+  context "validation" do
     around(:each) do |example|
       Config.reset
       example.run
       Config.reset
     end
 
-    context 'with validation_contract' do
-      it 'should raise if validation_contract is present and validation fails' do
+    context "with validation_contract" do
+      it "should raise if validation_contract is present and validation fails" do
         contract = Class.new(Dry::Validation::Contract)
         contract.params do
           required(:youtube).schema do
@@ -24,13 +26,13 @@ describe Config do
 
         msg = "Config validation failed:\n\n"
         msg += "  youtube.nonexist_field: is missing\n"
-        msg += '  youtube.multiple_requirements: must be an integer'
+        msg += "  youtube.multiple_requirements: must be an integer"
 
         expect { Config.load_files("#{fixture_path}/validation/config.yml") }.
           to raise_error(Config::Validation::Error, Regexp.new(msg))
       end
 
-      it 'should work if validation passes' do
+      it "should work if validation passes" do
         contract = Class.new(Dry::Validation::Contract)
         contract.params do
           required(:youtube).schema do
@@ -46,8 +48,8 @@ describe Config do
       end
     end
 
-    context 'with schema' do
-      it 'should raise if schema is present and validation fails' do
+    context "with schema" do
+      it "should raise if schema is present and validation fails" do
         Config.setup do |config|
           config.schema do
             required(:youtube).schema do
@@ -59,13 +61,13 @@ describe Config do
 
         msg = "Config validation failed:\n\n"
         msg += "  youtube.nonexist_field: is missing\n"
-        msg += '  youtube.multiple_requirements: must be an integer'
+        msg += "  youtube.multiple_requirements: must be an integer"
 
         expect { Config.load_files("#{fixture_path}/validation/config.yml") }.
           to raise_error(Config::Validation::Error, Regexp.new(msg))
       end
 
-      it 'should work if validation passes' do
+      it "should work if validation passes" do
         Config.setup do |config|
           config.schema do
             required(:youtube).schema do

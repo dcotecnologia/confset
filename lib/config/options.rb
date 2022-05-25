@@ -1,5 +1,7 @@
-require 'ostruct'
-require 'config/validation/validate'
+# frozen_string_literal: true
+
+require "ostruct"
+require "config/validation/validate"
 
 module Config
   class Options < OpenStruct
@@ -151,35 +153,34 @@ module Config
     end
 
     protected
-
-    def descend_array(array)
-      array.map do |value|
-        if value.instance_of? Config::Options
-          value.to_hash
-        elsif value.instance_of? Array
-          descend_array(value)
-        else
-          value
+      def descend_array(array)
+        array.map do |value|
+          if value.instance_of? Config::Options
+            value.to_hash
+          elsif value.instance_of? Array
+            descend_array(value)
+          else
+            value
+          end
         end
       end
-    end
 
-    # Recursively converts Hashes to Options (including Hashes inside Arrays)
-    def __convert(h) #:nodoc:
-      s = self.class.new
+      # Recursively converts Hashes to Options (including Hashes inside Arrays)
+      def __convert(h) # :nodoc:
+        s = self.class.new
 
-      h.each do |k, v|
-        k = k.to_s if !k.respond_to?(:to_sym) && k.respond_to?(:to_s)
+        h.each do |k, v|
+          k = k.to_s if !k.respond_to?(:to_sym) && k.respond_to?(:to_s)
 
-        if v.is_a?(Hash)
-          v = v["type"] == "hash" ? v["contents"] : __convert(v)
-        elsif v.is_a?(Array)
-          v = v.collect { |e| e.instance_of?(Hash) ? __convert(e) : e }
+          if v.is_a?(Hash)
+            v = v["type"] == "hash" ? v["contents"] : __convert(v)
+          elsif v.is_a?(Array)
+            v = v.collect { |e| e.instance_of?(Hash) ? __convert(e) : e }
+          end
+
+          s[k] = v
         end
-
-        s[k] = v
+        s
       end
-      s
-    end
   end
 end

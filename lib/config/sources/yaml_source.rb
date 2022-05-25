@@ -1,5 +1,7 @@
-require 'yaml'
-require 'erb'
+# frozen_string_literal: true
+
+require "yaml"
+require "erb"
 
 module Config
   module Sources
@@ -14,7 +16,7 @@ module Config
 
       # returns a config hash from the YML file
       def load
-        if @path and File.exist?(@path)
+        if @path && File.exist?(@path)
           file_contents = IO.read(@path)
           file_contents = ERB.new(file_contents).result if evaluate_erb
           result = YAML.respond_to?(:unsafe_load) ? YAML.unsafe_load(file_contents) : YAML.load(file_contents)

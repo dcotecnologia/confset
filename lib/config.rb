@@ -1,21 +1,23 @@
-require 'config/compatibility'
-require 'config/options'
-require 'config/configuration'
-require 'config/version'
-require 'config/sources/yaml_source'
-require 'config/sources/hash_source'
-require 'config/sources/env_source'
-require 'config/validation/schema'
-require 'deep_merge'
+# frozen_string_literal: true
+
+require "config/compatibility"
+require "config/options"
+require "config/configuration"
+require "config/version"
+require "config/sources/yaml_source"
+require "config/sources/hash_source"
+require "config/sources/env_source"
+require "config/validation/schema"
+require "deep_merge"
 
 module Config
   extend Config::Validation::Schema
   extend Config::Configuration.new(
     # general options
-    const_name: 'Settings',
+    const_name: "Settings",
     use_env: false,
-    env_prefix: 'Settings',
-    env_separator: '.',
+    env_prefix: "Settings",
+    env_separator: ".",
     env_converter: :downcase,
     env_parse_values: true,
     fail_on_missing: false,
@@ -58,18 +60,18 @@ module Config
 
   def self.setting_files(config_root, env)
     [
-      File.join(config_root, 'settings.yml').to_s,
-      File.join(config_root, 'settings', "#{env}.yml").to_s,
-      File.join(config_root, 'environments', "#{env}.yml").to_s,
+      File.join(config_root, "settings.yml").to_s,
+      File.join(config_root, "settings", "#{env}.yml").to_s,
+      File.join(config_root, "environments", "#{env}.yml").to_s,
       *local_setting_files(config_root, env)
     ].freeze
   end
 
   def self.local_setting_files(config_root, env)
     [
-      (File.join(config_root, 'settings.local.yml').to_s if env != 'test'),
-      File.join(config_root, 'settings', "#{env}.local.yml").to_s,
-      File.join(config_root, 'environments', "#{env}.local.yml").to_s
+      (File.join(config_root, "settings.local.yml").to_s if env != "test"),
+      File.join(config_root, "settings", "#{env}.local.yml").to_s,
+      File.join(config_root, "environments", "#{env}.local.yml").to_s
     ].compact
   end
 
@@ -79,7 +81,7 @@ module Config
 end
 
 # Rails integration
-require('config/integrations/rails/railtie') if defined?(::Rails)
+require("config/integrations/rails/railtie") if defined?(::Rails)
 
 # Sinatra integration
-require('config/integrations/sinatra') if defined?(::Sinatra)
+require("config/integrations/sinatra") if defined?(::Sinatra)

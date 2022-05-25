@@ -1,4 +1,6 @@
-require 'spec_helper'
+# frozen_string_literal: true
+
+require "spec_helper"
 
 module Config::Sources
   describe HashSource do
@@ -14,7 +16,7 @@ module Config::Sources
             "size" => 2,
             "section" => {
               "size" => 3,
-              "servers" => [ {"name" => "yahoo.com"}, {"name" => "amazon.com"} ]
+              "servers" => [ { "name" => "yahoo.com" }, { "name" => "amazon.com" } ]
             }
           }
         )

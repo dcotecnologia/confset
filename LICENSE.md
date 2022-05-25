@@ -1,6 +1,6 @@
 # The MIT License (MIT)
 
-Copyright (c) 2010-2014 Jacques Crocker, Fred Wu, Piotr Kuczynski
+Copyright (c) 2022 DCO Tecnologia
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,6 +21,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 Third-party materials and licenses:
+
+* Config contains Config (<https://github.com/rubyconfig/config>) which is governed by the MIT license
+  Copyright (C) 2010-2014 Jacques Crocker, Fred Wu, Piotr Kuczynski
 
 * Config contains Deep Merge (deep_merge.rb) which is governed by the MIT license
   Copyright (C) 2008 Steve Midgley
