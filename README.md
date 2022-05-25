@@ -1,5 +1,7 @@
 # Config
 
+[![Gem Version](https://badge.fury.io/rb/config-rb.svg)](https://badge.fury.io/rb/config-rb)
+[![Downloads Total](https://img.shields.io/gem/dt/config-rb)](https://rubygems.org/gems/config-rb)
 [![Build](https://github.com/dcotecnologia/config-rb/actions/workflows/tests.yml/badge.svg)](https://github.com/dcotecnologia/config-rb/actions/workflows/tests.yml)
 
 ## Summary
@@ -30,10 +32,24 @@ for the following interpreters and frameworks:
 
 ## Installing
 
-Add the gem to your `Gemfile` and run `bundle install` to install it.
+Add the gem to your `Gemfile` and run `bundle install` to install it:
 
 ```ruby
 gem "config-rb", "~> 1.0.0"
+```
+
+You can also install by the GitHub packages server:
+
+```ruby
+source "https://rubygems.pkg.github.com/dcotecnologia" do
+  gem "config-rb", "1.0.0"
+end
+```
+
+Or directly using the repository version:
+
+```ruby
+gem "config", github: "dcotecnologia/config-rb", branch: "master"
 ```
 
 ### Installing on Rails
