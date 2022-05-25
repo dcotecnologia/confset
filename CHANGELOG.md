@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.0.1-20220525 - [Danilo Carolino](@danilogco)
+
+Minor fixes
+
+* Fix incorrect links to the repository
+
 ## v1.0.0-20220525 - [Danilo Carolino](@danilogco)
 
 Initial release

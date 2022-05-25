@@ -11,9 +11,9 @@ Gem::Specification.new do |s|
   s.authors          = ["Piotr Kuczynski", "Fred Wu", "Jacques Crocker", "Danilo Carolino"]
   s.email            = %w[danilogcarolino@gmail.com]
   s.summary          = "Effortless multi-environment settings in Rails, Sinatra, Pandrino and others"
-  s.description      = "Easiest way to manage multi-environment settings in any ruby project or framework: " +
-                       "Rails, Sinatra, Pandrino and others"
-  s.homepage         = "https://github.com/rubyconfig/config"
+  s.description      = "Easiest way to manage multi-environment settings in any ruby project or framework: "
+  + "Rails, Sinatra, Pandrino and others"
+  s.homepage         = "https://github.com/dcotecnologia/config-rb"
   s.license          = "MIT"
   s.extra_rdoc_files = %w[README.md CHANGELOG.md CONTRIBUTING.md LICENSE.md]
   s.rdoc_options     = ["--charset=UTF-8"]
