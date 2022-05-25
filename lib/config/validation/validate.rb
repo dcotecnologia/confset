@@ -1,4 +1,6 @@
-require 'config/validation/error'
+# frozen_string_literal: true
+
+require "config/validation/error"
 
 module Config
   module Validation
@@ -9,17 +11,16 @@ module Config
       end
 
       private
+        def validate_using!(validator)
+          if validator
+            result = validator.call(to_hash)
 
-      def validate_using!(validator)
-        if validator
-          result = validator.call(to_hash)
+            return if result.success?
 
-          return if result.success?
-
-          error = Config::Validation::Error.format(result)
-          raise Config::Validation::Error, "Config validation failed:\n\n#{error}"
+            error = Config::Validation::Error.format(result)
+            raise Config::Validation::Error, "Config validation failed:\n\n#{error}"
+          end
         end
-      end
     end
   end
 end

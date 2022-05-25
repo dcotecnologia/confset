@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Config
   # The main configuration backbone
   class Configuration < Module
@@ -12,25 +14,24 @@ module Config
     end
 
     private
+      def define_reader(name, default)
+        variable = :"@#{name}"
 
-    def define_reader(name, default)
-      variable = :"@#{name}"
-
-      define_method(name) do
-        if instance_variable_defined?(variable)
-          instance_variable_get(variable)
-        else
-          default
+        define_method(name) do
+          if instance_variable_defined?(variable)
+            instance_variable_get(variable)
+          else
+            default
+          end
         end
       end
-    end
 
-    def define_writer(name)
-      variable = :"@#{name}"
+      def define_writer(name)
+        variable = :"@#{name}"
 
-      define_method("#{name}=") do |value|
-        instance_variable_set(variable, value)
+        define_method("#{name}=") do |value|
+          instance_variable_set(variable, value)
+        end
       end
-    end
   end
 end

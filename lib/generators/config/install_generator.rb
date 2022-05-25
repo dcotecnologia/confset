@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Config
   module Generators
     class InstallGenerator < ::Rails::Generators::Base
@@ -18,9 +20,9 @@ module Config
       end
 
       def modify_gitignore
-        create_file '.gitignore' unless File.exist? '.gitignore'
+        create_file ".gitignore" unless File.exist? ".gitignore"
 
-        append_to_file '.gitignore' do
+        append_to_file ".gitignore" do
           "\n"                                +
           "config/settings.local.yml\n"       +
           "config/settings/*.local.yml\n"     +

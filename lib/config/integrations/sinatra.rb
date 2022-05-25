@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "config/rack/reloader"
 
 module Config
@@ -8,7 +10,6 @@ module Config
   #
   def self.registered(app)
     app.configure do |inner_app|
-
       env = inner_app.environment || ENV["RACK_ENV"]
       root = inner_app.root
 
@@ -18,7 +19,7 @@ module Config
         root = Padrino.root if Padrino.respond_to?(:root)
       end
 
-      Config.load_and_set_settings(Config.setting_files(File.join(root, 'config'), env))
+      Config.load_and_set_settings(Config.setting_files(File.join(root, "config"), env))
 
       inner_app.use(::Config::Rack::Reloader) if inner_app.development?
     end

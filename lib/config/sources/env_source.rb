@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Config
   module Sources
     # Allows settings to be loaded from a "flat" hash with string keys, like ENV.
@@ -31,12 +33,12 @@ module Config
 
           keys.map! { |key|
             case converter
-              when :downcase then
-                key.downcase
-              when nil then
-                key
-              else
-                raise "Invalid ENV variables name converter: #{converter}"
+            when :downcase then
+              key.downcase
+            when nil then
+              key
+            else
+              raise "Invalid ENV variables name converter: #{converter}"
             end
           }
 
@@ -56,18 +58,17 @@ module Config
       end
 
       private
-
-      # Try to convert string to a correct type
-      def __value(v)
-        case v
-        when 'false'
-          false
-        when 'true'
-          true
-        else
-          Integer(v) rescue Float(v) rescue v
+        # Try to convert string to a correct type
+        def __value(v)
+          case v
+          when "false"
+            false
+          when "true"
+            true
+          else
+            Integer(v) rescue Float(v) rescue v
+          end
         end
-      end
     end
   end
 end

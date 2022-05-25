@@ -1,9 +1,11 @@
-require 'spec_helper'
+# frozen_string_literal: true
 
-describe 'db:create', :rails do
-  include_context 'rake'
+require "spec_helper"
 
-  it 'has access to Settings object and can read databases from settings.yml file' do
-    Rake::Task['db:create'].invoke
+describe "db:create", :rails do
+  include_context "rake"
+
+  it "has access to Settings object and can read databases from settings.yml file" do
+    Rake::Task["db:create"].invoke
   end
 end

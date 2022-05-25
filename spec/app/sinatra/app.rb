@@ -1,9 +1,11 @@
-require 'sinatra'
-require File.expand_path('../../../../lib/config', __FILE__)
+# frozen_string_literal: true
+
+require "sinatra"
+require File.expand_path("../../../../lib/config", __FILE__)
 
 set :root, File.dirname(__FILE__)
 register Config
 
-get '/' do
-  'Hello world!'
+get "/" do
+  "Hello world!"
 end

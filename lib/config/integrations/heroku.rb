@@ -1,13 +1,15 @@
-require 'bundler'
+# frozen_string_literal: true
+
+require "bundler"
 
 module Config
   module Integrations
     class Heroku < Struct.new(:app)
       def invoke
-        puts 'Setting vars...'
+        puts "Setting vars..."
         heroku_command = "config:set #{vars}"
         heroku(heroku_command)
-        puts 'Vars set:'
+        puts "Vars set:"
         puts heroku_command
       end
 
@@ -19,9 +21,9 @@ module Config
             Rails.root.join("config", "environments", "#{environment}.local.yml").to_s
         )
 
-        out = ''
+        out = ""
         dotted_hash = to_dotted_hash Kernel.const_get(Config.const_name).to_hash, {}, Config.const_name
-        dotted_hash.each {|key, value| out += " #{key}=#{value} "}
+        dotted_hash.each { |key, value| out += " #{key}=#{value} " }
         out
       end
 
@@ -41,16 +43,16 @@ module Config
       def to_dotted_hash(source, target = {}, namespace = nil)
         prefix = "#{namespace}." if namespace
         case source
-          when Hash
-            source.each do |key, value|
-              to_dotted_hash(value, target, "#{prefix}#{key}")
-            end
-          when Array
-            source.each_with_index do |value, index|
-              to_dotted_hash(value, target, "#{prefix}#{index}")
-            end
-          else
-            target[namespace] = source
+        when Hash
+          source.each do |key, value|
+            to_dotted_hash(value, target, "#{prefix}#{key}")
+          end
+        when Array
+          source.each_with_index do |value, index|
+            to_dotted_hash(value, target, "#{prefix}#{index}")
+          end
+        else
+          target[namespace] = source
         end
         target
       end
