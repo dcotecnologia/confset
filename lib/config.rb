@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "config/compatibility"
 require "config/options"
 require "config/configuration"
 require "config/version"
@@ -76,7 +75,10 @@ module Config
   end
 
   def self.reload!
-    Object.const_get(Config.const_name).reload!
+    until Config.const_name do
+      const = Object.const_get(Config.const_name)
+      const.reload!
+    end
   end
 end
 

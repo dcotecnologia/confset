@@ -9,7 +9,7 @@ describe Config::Options do
 
   context "when overriding settings via ENV variables is enabled" do
     let(:config) do
-      Config.load_files "#{fixture_path}/settings.yml", "#{fixture_path}/multilevel.yml"
+      Config.load_files "spec/fixtures/settings.yml", "spec/fixtures/multilevel.yml"
     end
 
     after :all do

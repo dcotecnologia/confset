@@ -11,7 +11,7 @@ module Config::Sources
 
     context "basic yml file" do
       let(:source) do
-        YAMLSource.new "#{fixture_path}/development.yml"
+        YAMLSource.new "spec/fixtures/development.yml"
       end
 
       it "should properly read the settings" do
@@ -29,7 +29,7 @@ module Config::Sources
 
     context "yml file with erb tags" do
       let(:source) do
-        YAMLSource.new("#{fixture_path}/with_erb.yml")
+        YAMLSource.new("spec/fixtures/with_erb.yml")
       end
 
       it "should properly evaluate the erb" do
@@ -45,7 +45,7 @@ module Config::Sources
 
       context "with malformed erb tags" do
         let(:source) do
-          YAMLSource.new("#{fixture_path}/with_malformed_erb.yml")
+          YAMLSource.new("spec/fixtures/with_malformed_erb.yml")
         end
 
         it "should properly evaluate the erb" do
@@ -58,7 +58,7 @@ module Config::Sources
 
     context "yaml file with erb tags but erb disabled" do
       let(:source) do
-        YAMLSource.new("#{fixture_path}/with_erb.yml", evaluate_erb: false)
+        YAMLSource.new("spec/fixtures/with_erb.yml", evaluate_erb: false)
       end
 
       it "should load the file and leave the erb without being evaluated" do
@@ -69,7 +69,7 @@ module Config::Sources
 
       context "with global config" do
         let(:source) do
-          YAMLSource.new("#{fixture_path}/with_erb.yml")
+          YAMLSource.new("spec/fixtures/with_erb.yml")
         end
 
         around do |example|
@@ -88,7 +88,7 @@ module Config::Sources
 
       context "with malformed erb tags" do
         let(:source) do
-          YAMLSource.new("#{fixture_path}/with_malformed_erb.yml", evaluate_erb: false)
+          YAMLSource.new("spec/fixtures/with_malformed_erb.yml", evaluate_erb: false)
         end
 
         it "should properly evaluate the erb" do
@@ -113,7 +113,7 @@ module Config::Sources
 
     context "blank yml file" do
       let(:source) do
-        YAMLSource.new "#{fixture_path}/empty1.yml"
+        YAMLSource.new "spec/fixtures/empty1.yml"
       end
 
       it "should return an empty hash" do
@@ -124,7 +124,7 @@ module Config::Sources
 
     context "malformed yml file" do
       let(:source) do
-        YAMLSource.new "#{fixture_path}/malformed.yml"
+        YAMLSource.new "spec/fixtures/malformed.yml"
       end
 
       it "should raise an useful exception" do
@@ -134,7 +134,7 @@ module Config::Sources
 
     context "unsafe yml file" do
       let(:source) do
-        YAMLSource.new "#{fixture_path}/unsafe_load.yml"
+        YAMLSource.new "spec/fixtures/unsafe_load.yml"
       end
 
       it "should load without any exception" do

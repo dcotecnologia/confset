@@ -1,11 +1,37 @@
-name: tests
+name: Build
 on:
+  workflow_dispatch:
   push:
+    branches:
+      - dev
   pull_request:
     branches:
-      - master
+      - '*'
+    paths-ignore:
+      - '**.md'
 jobs:
-  test:
+  Linting:
+    if: ${{ github.actor != 'dependabot[bot]' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1.2'
+      - name: Run Install
+        run: |
+          sudo apt-get -yqq install libpq-dev
+          gem update --system --no-document
+          gem install rake
+          gem install bundler
+          bundle install
+      - name: Run Linter (rubocop)
+        run: |
+          bundle exec rubocop --format json -o report.json
+  Testing:
+    if: ${{ github.actor != 'dependabot[bot]' }}
     name: ${{ matrix.ruby }}
     runs-on: ubuntu-latest
     env:
@@ -21,7 +47,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@master
-
       - name: Setup ruby ${{ matrix.ruby }}
         uses: ruby/setup-ruby@v1
         with:
@@ -40,9 +65,8 @@ jobs:
       - name: Prepare environment
         run: |
           sudo apt-get -y install libsqlite3-dev libxslt1-dev
-      - name: Install
+      - name: Install dependencies
         run: |
           bundle install
-          bundle exec appraisal install
-      - name: Test
-        run: bundle exec appraisal rspec
+      - name: Run RSpec
+        run: bundle exec rspec

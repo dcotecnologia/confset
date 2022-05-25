@@ -17,31 +17,15 @@ Gem::Specification.new do |s|
   s.license          = "MIT"
   s.extra_rdoc_files = %w[README.md CHANGELOG.md CONTRIBUTING.md LICENSE.md]
   s.rdoc_options     = ["--charset=UTF-8"]
-
   s.files = `git ls-files`.split($/)
   s.files.select! { |file| /(^lib\/|^\w+.md$|\.gemspec$)/ =~ file }
-
   s.require_paths         = ["lib"]
   s.required_ruby_version = ">= 2.7.0"
-
   s.add_dependency "deep_merge", "~> 1.2", ">= 1.2.1"
   s.add_dependency "dry-validation", "~> 1.0", ">= 1.0.0"
-
-
-  # Testing
-  s.add_development_dependency "appraisal", "~> 2.3", ">= 2.3.0"
   s.add_development_dependency "rspec", "~> 3.9", ">= 3.9.0"
-
-  # Default RSpec run will test against latest Rails app
-  unless ENV["APPRAISAL_INITIALIZED"] || ENV["GITHUB_ACTIONS"]
-    gems_to_install = /gem "(.*?)", "(.*?)"(?!, platform: (?!\[:ruby\]))/
-    File.read(Dir["gemfiles/rails*.gemfile"].sort.last).scan(gems_to_install) do |name, version|
-      s.add_development_dependency name, version
-    end
-  end
-
   s.add_development_dependency "rake", "~> 13.0"
-  s.add_development_dependency "simplecov", "~> 0.21" if RUBY_ENGINE == "ruby"
+  s.add_development_dependency "simplecov", "~> 0.21"
   s.add_development_dependency "mdl", "~> 0.11"
   s.add_development_dependency "rubocop", "~> 1.29"
   s.add_development_dependency "rubocop-packaging", "~> 0.5"

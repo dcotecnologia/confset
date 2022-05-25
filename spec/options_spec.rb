@@ -9,7 +9,7 @@ describe Config::Options do
 
   context "when Settings file is using keywords reserved for OpenStruct" do
     let(:config) do
-      Config.load_files("#{fixture_path}/reserved_keywords.yml")
+      Config.load_files("spec/fixtures/reserved_keywords.yml")
     end
 
     it "should allow to access them via object member notation" do
@@ -43,11 +43,11 @@ describe Config::Options do
 
   context "adding sources" do
     let(:config) do
-      Config.load_files("#{fixture_path}/settings.yml")
+      Config.load_files("spec/fixtures/settings.yml")
     end
 
     before do
-      config.add_source!("#{fixture_path}/deep_merge2/config1.yml")
+      config.add_source!("spec/fixtures/deep_merge2/config1.yml")
       config.reload!
     end
 
@@ -61,7 +61,7 @@ describe Config::Options do
 
     context "overwrite with YAML file" do
       before do
-        config.add_source!("#{fixture_path}/deep_merge2/config2.yml")
+        config.add_source!("spec/fixtures/deep_merge2/config2.yml")
         config.reload!
       end
 
@@ -84,11 +84,11 @@ describe Config::Options do
 
   context "prepending sources" do
     let(:config) do
-      Config.load_files("#{fixture_path}/settings.yml")
+      Config.load_files("spec/fixtures/settings.yml")
     end
 
     before do
-      config.prepend_source!("#{fixture_path}/deep_merge2/config1.yml")
+      config.prepend_source!("spec/fixtures/deep_merge2/config1.yml")
       config.reload!
     end
 
@@ -102,7 +102,7 @@ describe Config::Options do
 
     context "be overwritten" do
       before do
-        config.prepend_source!("#{fixture_path}/deep_merge2/config2.yml")
+        config.prepend_source!("spec/fixtures/deep_merge2/config2.yml")
         config.reload!
       end
 
@@ -135,14 +135,14 @@ describe Config::Options do
       before { Config.setup { |cfg| cfg.fail_on_missing = true } }
 
       it "should raise an error when accessing a missing key" do
-        config = Config.load_files("#{fixture_path}/empty1.yml")
+        config = Config.load_files("spec/fixtures/empty1.yml")
 
         expect { config.not_existing_method }.to raise_error(KeyError)
         expect { config[:not_existing_method] }.to raise_error(KeyError)
       end
 
       it "should raise an error when accessing a removed key" do
-        config = Config.load_files("#{fixture_path}/empty1.yml")
+        config = Config.load_files("spec/fixtures/empty1.yml")
 
         config.tmp_existing = 1337
         expect(config.tmp_existing).to eq(1337)
@@ -157,7 +157,7 @@ describe Config::Options do
       before { Config.setup { |cfg| cfg.fail_on_missing = false } }
 
       it "should return nil when accessing a missing key" do
-        config = Config.load_files("#{fixture_path}/empty1.yml")
+        config = Config.load_files("spec/fixtures/empty1.yml")
 
         expect(config.not_existing_method).to eq(nil)
         expect(config[:not_existing_method]).to eq(nil)
@@ -167,11 +167,11 @@ describe Config::Options do
 
   context "#key? and #has_key? methods" do
     let(:config) {
-      config = Config.load_files("#{fixture_path}/empty1.yml")
+      config = Config.load_files("spec/fixtures/empty1.yml")
       config.existing = nil
       config.send("complex_value=", nil)
       config.send("even_more_complex_value==", nil)
-      config.nested = Config.load_files("#{fixture_path}/empty2.yml")
+      config.nested = Config.load_files("spec/fixtures/empty2.yml")
       config.nested.existing = nil
       config
     }
@@ -199,7 +199,7 @@ describe Config::Options do
       } }
 
       it "should merge the arrays" do
-        config = Config.load_files("#{fixture_path}/deep_merge3/config1.yml", "#{fixture_path}/deep_merge3/config2.yml")
+        config = Config.load_files("spec/fixtures/deep_merge3/config1.yml", "spec/fixtures/deep_merge3/config2.yml")
 
         expect(config.array.length).to eq(1)
         expect(config.array[0].a).to eq("one")
@@ -214,7 +214,7 @@ describe Config::Options do
       } }
 
       it "should merge the arrays" do
-        config = Config.load_files("#{fixture_path}/deep_merge3/config1.yml", "#{fixture_path}/deep_merge3/config2.yml")
+        config = Config.load_files("spec/fixtures/deep_merge3/config1.yml", "spec/fixtures/deep_merge3/config2.yml")
 
         expect(config.array.length).to eq(2)
         expect(config.array[0].b).to eq(nil)
@@ -241,7 +241,7 @@ describe Config::Options do
 
   context "parsing values" do
     let(:config) do
-      Config.load_files("#{fixture_path}/settings.yml")
+      Config.load_files("spec/fixtures/settings.yml")
     end
 
     it "should return number when its specified without quotes" do
