@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    config (4.0.0)
+    config-rb (1.0.0)
       deep_merge (~> 1.2, >= 1.2.1)
       dry-validation (~> 1.0, >= 1.0.0)
 
@@ -112,7 +112,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  config!
+  config-rb!
   mdl (~> 0.11)
   rake (~> 13.0)
   rspec (~> 3.9, >= 3.9.0)
@@ -122,4 +122,4 @@ DEPENDENCIES
   simplecov (~> 0.21)
 
 BUNDLED WITH
-   2.3.13
+   2.3.14

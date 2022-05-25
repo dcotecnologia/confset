@@ -5,7 +5,7 @@ $:.push File.expand_path("../lib", __FILE__)
 require "config/version"
 
 Gem::Specification.new do |s|
-  s.name             = "config"
+  s.name             = "config-rb"
   s.version          = Config::VERSION
   s.date             = Time.now.strftime "%F"
   s.authors          = ["Piotr Kuczynski", "Fred Wu", "Jacques Crocker", "Danilo Carolino"]
