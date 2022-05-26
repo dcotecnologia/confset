@@ -9,6 +9,8 @@
 Config helps you easily manage environment specific settings in an easy and
 usable manner.
 
+This project is a fork of <https://github.com/rubyconfig/config>.
+
 ## Features
 
 * simple YAML config files
