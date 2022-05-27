@@ -2,13 +2,13 @@
 
 require "spec_helper"
 
-describe Config do
+describe Confset do
   before :each do
-    Config.reset
+    Confset.reset
   end
 
   it "should get setting files" do
-    config = Config.setting_files("root/config", "staging")
+    config = Confset.setting_files("root/config", "staging")
     expect(config).to eq([
                            "root/config/settings.yml",
                            "root/config/settings/staging.yml",
@@ -20,7 +20,7 @@ describe Config do
   end
 
   it "should ignore local config in test environment" do
-    config = Config.setting_files("root/config", "test")
+    config = Confset.setting_files("root/config", "test")
     expect(config).to eq([
                            "root/config/settings.yml",
                            "root/config/settings/test.yml",
@@ -31,7 +31,7 @@ describe Config do
   end
 
   it "should load a basic config file" do
-    config = Config.load_files("spec/fixtures/settings.yml")
+    config = Confset.load_files("spec/fixtures/settings.yml")
     expect(config.size).to eq(1)
     expect(config.server).to eq("google.com")
     expect(config["1"]).to eq("one")
@@ -41,7 +41,7 @@ describe Config do
   end
 
   it "should load 2 basic config files" do
-    config = Config.load_files("spec/fixtures/settings.yml", "spec/fixtures/settings2.yml")
+    config = Confset.load_files("spec/fixtures/settings.yml", "spec/fixtures/settings2.yml")
     expect(config.size).to eq(1)
     expect(config.server).to eq("google.com")
     expect(config.another).to eq("something")
@@ -49,7 +49,7 @@ describe Config do
 
   it "should load config files specified as Pathname objects" do
     path = Pathname.new("spec/fixtures").join("settings.yml")
-    config = Config.load_files(path)
+    config = Confset.load_files(path)
     expect(config.server).to eq("google.com")
   end
 
@@ -58,92 +58,92 @@ describe Config do
     allow(source).to receive(:load) do
       { "server" => "google.com" }
     end
-    config = Config.load_files(source)
+    config = Confset.load_files(source)
     expect(config.server).to eq("google.com")
   end
 
   it "should load config from HashSource" do
-    source = Config::Sources::HashSource.new({ "server" => "google.com" })
-    config = Config.load_files(source)
+    source = Confset::Sources::HashSource.new({ "server" => "google.com" })
+    config = Confset.load_files(source)
     expect(config.server).to eq("google.com")
   end
 
   it "should load config from files and HashSource" do
     file_source = "spec/fixtures/settings.yml"
-    hash_source = Config::Sources::HashSource.new({ "size" => 12 })
-    config = Config.load_files(file_source, hash_source)
+    hash_source = Confset::Sources::HashSource.new({ "size" => 12 })
+    config = Confset.load_files(file_source, hash_source)
     expect(config.server).to eq("google.com")
     expect(config.size).to eq(12)
   end
 
   it "should load empty config for a missing file path" do
-    config = Config.load_files("spec/fixtures/some_file_that_doesnt_exist.yml")
+    config = Confset.load_files("spec/fixtures/some_file_that_doesnt_exist.yml")
     expect(config).to be_empty
   end
 
   it "should load an empty config for multiple missing file paths" do
     files  = ["spec/fixtures/doesnt_exist1.yml", "spec/fixtures/doesnt_exist2.yml"]
-    config = Config.load_files(files)
+    config = Confset.load_files(files)
     expect(config).to be_empty
   end
 
   it "should load empty config for an empty setting file" do
-    config = Config.load_files("spec/fixtures/empty1.yml")
+    config = Confset.load_files("spec/fixtures/empty1.yml")
     expect(config).to be_empty
   end
 
   it "should convert to a hash" do
-    config = Config.load_files("spec/fixtures/development.yml").to_hash
+    config = Confset.load_files("spec/fixtures/development.yml").to_hash
     expect(config[:section][:servers]).to be_kind_of(Array)
     expect(config[:section][:servers][0][:name]).to eq("yahoo.com")
     expect(config[:section][:servers][1][:name]).to eq("amazon.com")
   end
 
   it "should convert to a hash (We Need To Go Deeper)" do
-    config  = Config.load_files("spec/fixtures/development.yml").to_hash
+    config  = Confset.load_files("spec/fixtures/development.yml").to_hash
     servers = config[:section][:servers]
     expect(servers).to eq([{ name: "yahoo.com" }, { name: "amazon.com" }])
   end
 
   it "should convert to a hash without modifying nested settings" do
-    config = Config.load_files("spec/fixtures/development.yml")
+    config = Confset.load_files("spec/fixtures/development.yml")
     config.to_hash
-    expect(config).to be_kind_of(Config::Options)
-    expect(config[:section]).to be_kind_of(Config::Options)
-    expect(config[:section][:servers][0]).to be_kind_of(Config::Options)
-    expect(config[:section][:servers][1]).to be_kind_of(Config::Options)
+    expect(config).to be_kind_of(Confset::Options)
+    expect(config[:section]).to be_kind_of(Confset::Options)
+    expect(config[:section][:servers][0]).to be_kind_of(Confset::Options)
+    expect(config[:section][:servers][1]).to be_kind_of(Confset::Options)
   end
 
   it "should convert to a hash without modifying nested settings" do
-    config = Config.load_files("spec/fixtures/development.yml")
+    config = Confset.load_files("spec/fixtures/development.yml")
     config.to_h
-    expect(config).to be_kind_of(Config::Options)
-    expect(config[:section]).to be_kind_of(Config::Options)
-    expect(config[:section][:servers][0]).to be_kind_of(Config::Options)
-    expect(config[:section][:servers][1]).to be_kind_of(Config::Options)
+    expect(config).to be_kind_of(Confset::Options)
+    expect(config[:section]).to be_kind_of(Confset::Options)
+    expect(config[:section][:servers][0]).to be_kind_of(Confset::Options)
+    expect(config[:section][:servers][1]).to be_kind_of(Confset::Options)
   end
 
   it "should convert to a json" do
-    config = Config.load_files("spec/fixtures/development.yml").to_json
+    config = Confset.load_files("spec/fixtures/development.yml").to_json
     expect(JSON.parse(config)["section"]["servers"]).to be_kind_of(Array)
   end
 
   it "should load an empty config for multiple missing file paths" do
     files  = ["spec/fixtures/empty1.yml", "spec/fixtures/empty2.yml"]
-    config = Config.load_files(files)
+    config = Confset.load_files(files)
     expect(config).to be_empty
   end
 
   it "should allow overrides" do
     files  = ["spec/fixtures/settings.yml", "spec/fixtures/development.yml"]
-    config = Config.load_files(files)
+    config = Confset.load_files(files)
     expect(config.server).to eq("google.com")
     expect(config.size).to eq(2)
   end
 
   it "should allow full reload of the settings files" do
     files = ["spec/fixtures/settings.yml"]
-    Config.load_and_set_settings(files)
+    Confset.load_and_set_settings(files)
     expect(Settings.server).to eq("google.com")
     expect(Settings.size).to eq(1)
 
@@ -157,7 +157,7 @@ describe Config do
 
   context "Nested Settings" do
     let(:config) do
-      Config.load_files("spec/fixtures/development.yml")
+      Confset.load_files("spec/fixtures/development.yml")
     end
 
     it "should allow nested sections" do
@@ -172,7 +172,7 @@ describe Config do
 
   context "Settings with ERB tags" do
     let(:config) do
-      Config.load_files("spec/fixtures/with_erb.yml")
+      Confset.load_files("spec/fixtures/with_erb.yml")
     end
 
     it "should evaluate ERB tags" do
@@ -189,7 +189,7 @@ describe Config do
   context "Boolean Overrides" do
     let(:config) do
       files = ["spec/fixtures/bool_override/config1.yml", "spec/fixtures/bool_override/config2.yml"]
-      Config.load_files(files)
+      Confset.load_files(files)
     end
 
     it "should allow overriding of bool settings" do
@@ -200,20 +200,20 @@ describe Config do
 
   context "Custom Configuration" do
     it "should have the default settings constant as 'Settings'" do
-      expect(Config.const_name).to eq("Settings")
+      expect(Confset.const_name).to eq("Settings")
     end
 
     it "should be able to assign a different settings constant" do
-      Config.setup { |config| config.const_name = "Settings2" }
+      Confset.setup { |config| config.const_name = "Settings2" }
 
-      expect(Config.const_name).to eq("Settings2")
+      expect(Confset.const_name).to eq("Settings2")
     end
   end
 
   context "Settings with a type value of 'hash'" do
     let(:config) do
       files = ["spec/fixtures/custom_types/hash.yml"]
-      Config.load_files(files)
+      Confset.load_files(files)
     end
 
     it "should turn that setting into a Real Hash" do
@@ -229,7 +229,7 @@ describe Config do
   end
 
   context "Merging hash at runtime" do
-    let(:config) { Config.load_files("spec/fixtures/settings.yml") }
+    let(:config) { Confset.load_files("spec/fixtures/settings.yml") }
     let(:hash) { { :options => { :suboption => "value" }, :server => "amazon.com" } }
 
     it "should be chainable" do
@@ -251,7 +251,7 @@ describe Config do
   end
 
   context "Merging nested hash at runtime" do
-    let(:config) { Config.load_files("spec/fixtures/deep_merge/config1.yml") }
+    let(:config) { Confset.load_files("spec/fixtures/deep_merge/config1.yml") }
     let(:hash) { { inner: { something1: "changed1", something3: "changed3" } } }
     let(:hash_with_nil) { { inner: { something1: nil } } }
 
@@ -309,10 +309,10 @@ describe Config do
         .to change { config.inner.somethingtrue }.from(true).to(nil)
     end
 
-    context "with Config.merge_nil_values = false" do
+    context "with Confset.merge_nil_values = false" do
       let(:config) do
-        Config.merge_nil_values = false
-        Config.load_files("spec/fixtures/deep_merge/config1.yml")
+        Confset.merge_nil_values = false
+        Confset.load_files("spec/fixtures/deep_merge/config1.yml")
       end
 
       it "should not overwrite values with nil" do
@@ -326,7 +326,7 @@ describe Config do
   context "[] accessors" do
     let(:config) do
       files = ["spec/fixtures/development.yml"]
-      Config.load_files(files)
+      Confset.load_files(files)
     end
 
     it "should access attributes using []" do
@@ -344,7 +344,7 @@ describe Config do
   context "enumerable" do
     let(:config) do
       files = ["spec/fixtures/development.yml"]
-      Config.load_files(files)
+      Confset.load_files(files)
     end
 
     it "should enumerate top level parameters" do
@@ -367,7 +367,7 @@ describe Config do
   context "keys" do
     let(:config) do
       files = ["spec/fixtures/development.yml"]
-      Config.load_files(files)
+      Confset.load_files(files)
     end
 
     it "should return array of keys" do
@@ -383,21 +383,21 @@ describe Config do
     context "using knockout_prefix" do
       context "in configuration phase" do
         it "should be able to assign a different knockout_prefix value" do
-          Config.knockout_prefix = "--"
+          Confset.knockout_prefix = "--"
 
-          expect(Config.knockout_prefix).to eq("--")
+          expect(Confset.knockout_prefix).to eq("--")
         end
 
         it "should have the default knockout_prefix value equal nil" do
-          expect(Config.knockout_prefix).to eq(nil)
+          expect(Confset.knockout_prefix).to eq(nil)
         end
       end
 
       context "merging" do
         let(:config) do
-          Config.knockout_prefix = "--"
-          Config.overwrite_arrays = false
-          Config.load_files(["spec/fixtures/knockout_prefix/config1.yml",
+          Confset.knockout_prefix = "--"
+          Confset.overwrite_arrays = false
+          Confset.load_files(["spec/fixtures/knockout_prefix/config1.yml",
                              "spec/fixtures/knockout_prefix/config2.yml",
                              "spec/fixtures/knockout_prefix/config3.yml"])
         end
@@ -420,20 +420,20 @@ describe Config do
     context "using overwrite_arrays" do
       context "in configuration phase" do
         it "should be able to assign a different overwrite_arrays value" do
-          Config.overwrite_arrays = false
+          Confset.overwrite_arrays = false
 
-          expect(Config.overwrite_arrays).to eq(false)
+          expect(Confset.overwrite_arrays).to eq(false)
         end
 
         it "should have the default overwrite_arrays value equal false" do
-          expect(Config.overwrite_arrays).to eq(true)
+          expect(Confset.overwrite_arrays).to eq(true)
         end
       end
 
       context "overwriting" do
         let(:config) do
-          Config.overwrite_arrays = true
-          Config.load_files(["spec/fixtures/overwrite_arrays/config1.yml",
+          Confset.overwrite_arrays = true
+          Confset.load_files(["spec/fixtures/overwrite_arrays/config1.yml",
                              "spec/fixtures/overwrite_arrays/config2.yml",
                              "spec/fixtures/overwrite_arrays/config3.yml"])
         end
@@ -448,8 +448,8 @@ describe Config do
 
       context "merging" do
         let(:config) do
-          Config.overwrite_arrays = false
-          Config.load_files(["spec/fixtures/deep_merge/config1.yml",
+          Confset.overwrite_arrays = false
+          Confset.load_files(["spec/fixtures/deep_merge/config1.yml",
                              "spec/fixtures/deep_merge/config2.yml"])
         end
 

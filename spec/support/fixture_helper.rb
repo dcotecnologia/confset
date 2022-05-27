@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 ##
-# Config Fixture Helpers
+# Confset Fixture Helpers
 #
 
 module FixtureHelper

@@ -2,7 +2,7 @@
 
 ENV["RAILS_ENV"] ||= "test"
 
-require "config"
+require "confset"
 
 Dir["./spec/support/**/*.rb"].each { |f| require f }
 
@@ -11,8 +11,8 @@ RSpec.configure do |config|
   config.raise_errors_for_deprecations!
 
   config.before(:suite) do
-    Config.module_eval do
-      # Extend Config module with ability to reset configuration to the default values
+    Confset.module_eval do
+      # Extend Confset module with ability to reset configuration to the default values
       def self.reset
         self.const_name           = "Settings"
         self.use_env              = false

@@ -2,28 +2,28 @@
 
 require "spec_helper"
 
-describe Config::Options do
+describe Confset::Options do
   before :each do
-    Config.reset
+    Confset.reset
   end
 
   context "when overriding settings via ENV variables is enabled" do
     let(:config) do
-      Config.load_files "spec/fixtures/settings.yml", "spec/fixtures/multilevel.yml"
+      Confset.load_files "spec/fixtures/settings.yml", "spec/fixtures/multilevel.yml"
     end
 
     after :all do
-      Config.use_env = false
+      Confset.use_env = false
     end
 
     before :each do
       ENV.clear
 
-      Config.use_env              = true
-      Config.env_prefix           = nil
-      Config.env_separator        = "."
-      Config.env_converter        = :downcase
-      Config.env_parse_values     = true
+      Confset.use_env              = true
+      Confset.env_prefix           = nil
+      Confset.env_separator        = "."
+      Confset.env_converter        = :downcase
+      Confset.env_parse_values     = true
     end
 
     it "should add new setting from ENV variable" do
@@ -91,7 +91,7 @@ describe Config::Options do
         it "should not convert numbers to integers" do
           ENV["Settings.new_var"] = "123"
 
-          Config.env_parse_values = false
+          Confset.env_parse_values = false
 
           expect(config.new_var).to eq("123")
         end
@@ -100,7 +100,7 @@ describe Config::Options do
 
     context "and custom ENV variables prefix is defined" do
       before :each do
-        Config.env_prefix = "MyConfig"
+        Confset.env_prefix = "MyConfig"
       end
 
       it "should load variables from the new prefix" do
@@ -124,7 +124,7 @@ describe Config::Options do
 
     context "and custom ENV variables separator is defined" do
       before :each do
-        Config.env_separator = "__"
+        Confset.env_separator = "__"
       end
 
       it "should load variables and correctly recognize the new separator" do
@@ -146,8 +146,8 @@ describe Config::Options do
 
     context "and custom ENV variables prefix includes custom ENV variables separator" do
       before :each do
-        Config.env_prefix = "MY_CONFIG"
-        Config.env_separator = "_"
+        Confset.env_prefix = "MY_CONFIG"
+        Confset.env_separator = "_"
       end
 
       it "should load environment variables which begin with the custom prefix" do
@@ -188,7 +188,7 @@ describe Config::Options do
         it "should downcase variable names when :downcase conversion enabled" do
           ENV["Settings.NEW_VAR"] = "value"
 
-          Config.env_converter = :downcase
+          Confset.env_converter = :downcase
 
           expect(config.new_var).to eq("value")
         end
@@ -198,7 +198,7 @@ describe Config::Options do
         it "should not change variable names by default" do
           ENV["Settings.NEW_VAR"] = "value"
 
-          Config.env_converter = nil
+          Confset.env_converter = nil
 
           expect(config.new_var).to eq(nil)
           expect(config.NEW_VAR).to eq("value")
@@ -211,7 +211,7 @@ describe Config::Options do
 
       expect(config.new_var).to eq("value")
 
-      Config.reload!
+      Confset.reload!
 
       expect(config.new_var).to eq("value")
     end

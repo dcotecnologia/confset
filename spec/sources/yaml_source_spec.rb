@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-module Config::Sources
+module Confset::Sources
   describe YAMLSource do
     it "should take a path as initializer" do
       source = YAMLSource.new "somepath"
@@ -73,10 +73,10 @@ module Config::Sources
         end
 
         around do |example|
-          original_evaluate_erb_in_yaml = Config.evaluate_erb_in_yaml
-          Config.evaluate_erb_in_yaml = false
+          original_evaluate_erb_in_yaml = Confset.evaluate_erb_in_yaml
+          Confset.evaluate_erb_in_yaml = false
           example.run
-          Config.evaluate_erb_in_yaml = original_evaluate_erb_in_yaml
+          Confset.evaluate_erb_in_yaml = original_evaluate_erb_in_yaml
         end
 
         it "should load the file and leave the erb without being evaluated" do

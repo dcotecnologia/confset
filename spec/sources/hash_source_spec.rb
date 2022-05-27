@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-module Config::Sources
+module Confset::Sources
   describe HashSource do
     it "should take a hash as initializer" do
       source = HashSource.new(foo: 5)

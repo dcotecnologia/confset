@@ -2,20 +2,20 @@
 
 require "spec_helper"
 
-module Config::Sources
+module Confset::Sources
   describe EnvSource do
     context "configuration options" do
       before :each do
-        Config.reset
-        Config.env_prefix           = nil
-        Config.env_separator        = "."
-        Config.env_converter        = :downcase
-        Config.env_parse_values     = true
+        Confset.reset
+        Confset.env_prefix           = nil
+        Confset.env_separator        = "."
+        Confset.env_converter        = :downcase
+        Confset.env_parse_values     = true
       end
 
       context "default configuration" do
         it "should use global prefix configuration by default" do
-          Config.env_prefix = "MY_CONFIG"
+          Confset.env_prefix = "MY_CONFIG"
 
           source = EnvSource.new({ "MY_CONFIG.ACTION_MAILER" => "enabled" })
           results = source.load
@@ -23,7 +23,7 @@ module Config::Sources
         end
 
         it "should use global separator configuration by default" do
-          Config.env_separator = "__"
+          Confset.env_separator = "__"
 
           source = EnvSource.new({ "Settings__ACTION_MAILER__ENABLED" => "yes" })
           results = source.load
@@ -31,7 +31,7 @@ module Config::Sources
         end
 
         it "should use global converter configuration by default" do
-          Config.env_converter = nil
+          Confset.env_converter = nil
 
           source = EnvSource.new({ "Settings.ActionMailer.Enabled" => "yes" })
           results = source.load
@@ -39,7 +39,7 @@ module Config::Sources
         end
 
         it "should use global parse_values configuration by default" do
-          Config.env_parse_values = false
+          Confset.env_parse_values = false
 
           source = EnvSource.new({ "Settings.ACTION_MAILER.ENABLED" => "true" })
           results = source.load

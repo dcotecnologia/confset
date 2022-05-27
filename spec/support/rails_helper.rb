@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 ##
-# Config Rspec Helpers
+# Confset Rspec Helpers
 #
 
 # Loads ENV vars from a yaml file
@@ -12,13 +12,13 @@ def load_env(filename)
   result.each { |key, value| ENV[key.to_s] = value.to_s } unless result.nil?
 end
 
-# Checks if (default) Config const is already available
+# Checks if (default) Confset const is already available
 def config_available?
   where = caller[0].split(":")[0].gsub(File.expand_path(File.dirname(__FILE__)), "")
 
   if defined?(::Settings)
-    puts "Config available in #{where}"
+    puts "Confset available in #{where}"
   else
-    raise "Config not available in #{where}"
+    raise "Confset not available in #{where}"
   end
 end

@@ -2,14 +2,14 @@
 
 require "spec_helper"
 
-describe Config::Options do
+describe Confset::Options do
   before :each do
-    Config.reset
+    Confset.reset
   end
 
   context "when Settings file is using keywords reserved for OpenStruct" do
     let(:config) do
-      Config.load_files("spec/fixtures/reserved_keywords.yml")
+      Confset.load_files("spec/fixtures/reserved_keywords.yml")
     end
 
     it "should allow to access them via object member notation" do
@@ -43,7 +43,7 @@ describe Config::Options do
 
   context "adding sources" do
     let(:config) do
-      Config.load_files("spec/fixtures/settings.yml")
+      Confset.load_files("spec/fixtures/settings.yml")
     end
 
     before do
@@ -84,7 +84,7 @@ describe Config::Options do
 
   context "prepending sources" do
     let(:config) do
-      Config.load_files("spec/fixtures/settings.yml")
+      Confset.load_files("spec/fixtures/settings.yml")
     end
 
     before do
@@ -132,17 +132,17 @@ describe Config::Options do
 
   context "when fail_on_missing option" do
     context "is set to true" do
-      before { Config.setup { |cfg| cfg.fail_on_missing = true } }
+      before { Confset.setup { |cfg| cfg.fail_on_missing = true } }
 
       it "should raise an error when accessing a missing key" do
-        config = Config.load_files("spec/fixtures/empty1.yml")
+        config = Confset.load_files("spec/fixtures/empty1.yml")
 
         expect { config.not_existing_method }.to raise_error(KeyError)
         expect { config[:not_existing_method] }.to raise_error(KeyError)
       end
 
       it "should raise an error when accessing a removed key" do
-        config = Config.load_files("spec/fixtures/empty1.yml")
+        config = Confset.load_files("spec/fixtures/empty1.yml")
 
         config.tmp_existing = 1337
         expect(config.tmp_existing).to eq(1337)
@@ -154,10 +154,10 @@ describe Config::Options do
     end
 
     context "is set to false" do
-      before { Config.setup { |cfg| cfg.fail_on_missing = false } }
+      before { Confset.setup { |cfg| cfg.fail_on_missing = false } }
 
       it "should return nil when accessing a missing key" do
-        config = Config.load_files("spec/fixtures/empty1.yml")
+        config = Confset.load_files("spec/fixtures/empty1.yml")
 
         expect(config.not_existing_method).to eq(nil)
         expect(config[:not_existing_method]).to eq(nil)
@@ -167,11 +167,11 @@ describe Config::Options do
 
   context "#key? and #has_key? methods" do
     let(:config) {
-      config = Config.load_files("spec/fixtures/empty1.yml")
+      config = Confset.load_files("spec/fixtures/empty1.yml")
       config.existing = nil
       config.send("complex_value=", nil)
       config.send("even_more_complex_value==", nil)
-      config.nested = Config.load_files("spec/fixtures/empty2.yml")
+      config.nested = Confset.load_files("spec/fixtures/empty2.yml")
       config.nested.existing = nil
       config
     }
@@ -193,13 +193,13 @@ describe Config::Options do
 
   context "when merge_hash_arrays options" do
     context "is set to true" do
-      before { Config.setup { |cfg|
+      before { Confset.setup { |cfg|
         cfg.overwrite_arrays = false
         cfg.merge_hash_arrays = true
       } }
 
       it "should merge the arrays" do
-        config = Config.load_files("spec/fixtures/deep_merge3/config1.yml", "spec/fixtures/deep_merge3/config2.yml")
+        config = Confset.load_files("spec/fixtures/deep_merge3/config1.yml", "spec/fixtures/deep_merge3/config2.yml")
 
         expect(config.array.length).to eq(1)
         expect(config.array[0].a).to eq("one")
@@ -208,13 +208,13 @@ describe Config::Options do
     end
 
     context "is set to false" do
-      before { Config.setup { |cfg|
+      before { Confset.setup { |cfg|
         cfg.overwrite_arrays = false
         cfg.merge_hash_arrays = false
       } }
 
       it "should merge the arrays" do
-        config = Config.load_files("spec/fixtures/deep_merge3/config1.yml", "spec/fixtures/deep_merge3/config2.yml")
+        config = Confset.load_files("spec/fixtures/deep_merge3/config1.yml", "spec/fixtures/deep_merge3/config2.yml")
 
         expect(config.array.length).to eq(2)
         expect(config.array[0].b).to eq(nil)
@@ -227,21 +227,21 @@ describe Config::Options do
     it "should return a Hash of the keys and values" do
       unless defined?(::Rails)
         skip <<~REASON
-          Config::Options#as_json raises a runtime error unless Active Support
+          Confset::Options#as_json raises a runtime error unless Active Support
           Core Extensions are loaded. We don't expect users to call this method
           at all if they're not using AS, so we disable this test except when
           running the suite against Rails.
         REASON
       end
 
-      options = Config::Options.new(foo: :bar)
+      options = Confset::Options.new(foo: :bar)
       expect(options.as_json).to eq({ "foo" => "bar" })
     end
   end
 
   context "parsing values" do
     let(:config) do
-      Config.load_files("spec/fixtures/settings.yml")
+      Confset.load_files("spec/fixtures/settings.yml")
     end
 
     it "should return number when its specified without quotes" do

@@ -2,10 +2,10 @@
 
 require "spec_helper"
 
-describe Config::Configuration do
+describe Confset::Configuration do
   subject do
     Module.new do
-      extend Config::Configuration.new(hello: "world")
+      extend Confset::Configuration.new(hello: "world")
     end
   end
 

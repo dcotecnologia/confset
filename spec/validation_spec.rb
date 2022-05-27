@@ -3,12 +3,12 @@
 require "spec_helper"
 require "dry-validation"
 
-describe Config do
+describe Confset do
   context "validation" do
     around(:each) do |example|
-      Config.reset
+      Confset.reset
       example.run
-      Config.reset
+      Confset.reset
     end
 
     context "with validation_contract" do
@@ -20,16 +20,16 @@ describe Config do
             required(:multiple_requirements).filled(:integer, gt?: 18)
           end
         end
-        Config.setup do |config|
+        Confset.setup do |config|
           config.validation_contract = contract.new
         end
 
-        msg = "Config validation failed:\n\n"
+        msg = "Confset validation failed:\n\n"
         msg += "  youtube.nonexist_field: is missing\n"
         msg += "  youtube.multiple_requirements: must be an integer"
 
-        expect { Config.load_files("spec/fixtures/validation/config.yml") }.
-          to raise_error(Config::Validation::Error, Regexp.new(msg))
+        expect { Confset.load_files("spec/fixtures/validation/confset.yml") }.
+          to raise_error(Confset::Validation::Error, Regexp.new(msg))
       end
 
       it "should work if validation passes" do
@@ -39,18 +39,18 @@ describe Config do
             required(:api_key).filled
           end
         end
-        Config.setup do |config|
+        Confset.setup do |config|
           config.validation_contract = contract.new
         end
 
-        expect { Config.load_files("spec/fixtures/validation/config.yml") }.
+        expect { Confset.load_files("spec/fixtures/validation/confset.yml") }.
           to_not raise_error
       end
     end
 
     context "with schema" do
       it "should raise if schema is present and validation fails" do
-        Config.setup do |config|
+        Confset.setup do |config|
           config.schema do
             required(:youtube).schema do
               required(:nonexist_field).filled
@@ -59,16 +59,16 @@ describe Config do
           end
         end
 
-        msg = "Config validation failed:\n\n"
+        msg = "Confset validation failed:\n\n"
         msg += "  youtube.nonexist_field: is missing\n"
         msg += "  youtube.multiple_requirements: must be an integer"
 
-        expect { Config.load_files("spec/fixtures/validation/config.yml") }.
-          to raise_error(Config::Validation::Error, Regexp.new(msg))
+        expect { Confset.load_files("spec/fixtures/validation/confset.yml") }.
+          to raise_error(Confset::Validation::Error, Regexp.new(msg))
       end
 
       it "should work if validation passes" do
-        Config.setup do |config|
+        Confset.setup do |config|
           config.schema do
             required(:youtube).schema do
               required(:api_key).filled
@@ -76,7 +76,7 @@ describe Config do
           end
         end
 
-        expect { Config.load_files("spec/fixtures/validation/config.yml") }.
+        expect { Confset.load_files("spec/fixtures/validation/confset.yml") }.
           to_not raise_error
       end
     end

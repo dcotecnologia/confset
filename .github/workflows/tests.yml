@@ -59,7 +59,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ env.BUNDLE_PATH }}
-          key: ruby-${{ matrix.ruby }}-gems-${{ hashFiles('config.gemspec', 'gemfiles/**') }}
+          key: ruby-${{ matrix.ruby }}-gems-${{ hashFiles('confset.gemspec') }}
           restore-keys: |
             ruby-${{ matrix.ruby }}-gems-
       - name: Prepare environment
