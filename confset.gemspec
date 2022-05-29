@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   + "Rails, Sinatra, Pandrino and others"
   s.homepage = "https://github.com/dcotecnologia/confset"
   s.required_ruby_version = ">= 2.7.0"
-  s.files = Dir["{lib}/**/*"] + Dir["{docs}/**/*"] + ["Rakefile"]
+  s.files = Dir["{lib}/**/*"] + ["Rakefile", "CHANGELOG.md", "README.md", "LICENSE.md"]
   s.test_files = Dir["spec/**/*"]
   s.license          = "MIT"
   s.rdoc_options     = ["--charset=UTF-8"]
