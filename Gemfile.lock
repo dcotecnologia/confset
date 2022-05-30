@@ -119,7 +119,7 @@ PLATFORMS
 DEPENDENCIES
   confset!
   mdl (~> 0.11)
-  pry
+  pry (~> 0.14)
   rake (~> 13.0)
   rspec (~> 3.9, >= 3.9.0)
   rubocop (~> 1.29)
