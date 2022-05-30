@@ -43,7 +43,13 @@ module Confset
           }
 
           leaf = keys[0...-1].inject(hash) { |h, key|
-            h[key] ||= {}
+            begin
+              h[key] ||= {}
+            rescue IndexError => e
+              Confset.logger.warn("[Confset] Wasn't possible to parse the env variable: #{variable}")
+
+              next
+            end
           }
 
           unless leaf.is_a?(Hash)
