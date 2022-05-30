@@ -3,6 +3,7 @@
 ENV["RAILS_ENV"] ||= "test"
 
 require "confset"
+require "pry"
 
 Dir["./spec/support/**/*.rb"].each { |f| require f }
 

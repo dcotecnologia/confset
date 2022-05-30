@@ -42,16 +42,18 @@ module Confset
             end
           }
 
-          leaf = keys[0...-1].inject(hash) { |h, key|
-            h[key] ||= {}
-          }
+          begin
+            leaf = keys[0...-1].inject(hash) { |h, key| h[key] ||= {} }
 
-          unless leaf.is_a?(Hash)
-            conflicting_key = (prefix + keys[0...-1]).join(separator)
-            raise "Environment variable #{variable} conflicts with variable #{conflicting_key}"
+            if leaf.is_a?(Hash)
+              leaf[keys.last] = parse_values ? __value(value) : value
+            else
+              conflicting_key = (prefix + keys[0...-1]).join(separator)
+              Confset.logger.error("Environment variable #{variable} conflicts with variable #{conflicting_key}")
+            end
+          rescue IndexError
+            Confset.logger.warn("Wasn't possible to parse the env variable: #{variable}")
           end
-
-          leaf[keys.last] = parse_values ? __value(value) : value
         end
 
         hash

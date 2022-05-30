@@ -29,6 +29,20 @@ module Confset
     evaluate_erb_in_yaml: true
   )
 
+  # Log information about the library.
+  # Confset.logger.info("some info")
+  # Documentation: https://ruby-doc.org/stdlib-3.1.2/libdoc/logger/rdoc/Logger.html
+  class << self
+    attr_writer :logger
+
+    def logger
+      @logger ||= Logger.new($stdout).tap do |log|
+        log.progname = self.name
+      end
+    end
+  end
+
+
   def self.setup
     yield self unless @_ran_once
     @_ran_once = true

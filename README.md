@@ -3,6 +3,8 @@
 [![Gem Version](https://badge.fury.io/rb/confset.svg)](https://badge.fury.io/rb/confset)
 [![Downloads Total](https://img.shields.io/gem/dt/confset)](https://rubygems.org/gems/confset)
 [![Build](https://github.com/dcotecnologia/confset/actions/workflows/tests.yml/badge.svg)](https://github.com/dcotecnologia/confset/actions/workflows/tests.yml)
+[![CodeQL](https://github.com/dcotecnologia/confset/actions/workflows/codeql.yml/badge.svg)](https://github.com/dcotecnologia/confset/actions/workflows/codeql.yml)
+[![Release](https://github.com/dcotecnologia/confset/actions/workflows/release.yml/badge.svg)](https://github.com/dcotecnologia/confset/actions/workflows/release.yml)
 
 ## Summary
 
