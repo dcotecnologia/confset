@@ -97,7 +97,7 @@ module Confset
 end
 
 # Rails integration
-require("confset/integrations/rails/railtie") if defined?(::Rails)
+require("confset/integrations/rails/railtie") if defined?(::Rails::Railtie)
 
 # Sinatra integration
 require("confset/integrations/sinatra") if defined?(::Sinatra)
