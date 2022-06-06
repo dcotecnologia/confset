@@ -1,20 +1,35 @@
 # Changelog
 
-## v1.0.1-20220530 - [Danilo Carolino](@danilogco)
+All notable changes to this project will be documented in this file.
 
-Fixes
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-* Avoid to crash the Rails application when there is an error
+## [Unreleased]
+
+## [1.0.2] - 2022-06-06
+
+### Changes
+
+- Only load Railtie integration if Rails::Railtie is defined
+[rubyconfig#31](https://github.com/rubyconfig/config/pull/319) - Thanks to Ufuk
+Kayserilioglu <ufuk.kayserilioglu@shopify.com>
+- CHANGELOG.md pattern changed to the [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [1.0.1] - 2022-05-30
+
+### Fixes
+
+- Avoid to crash the Rails application when there is an error
 parsing a variable <https://github.com/dcotecnologia/confset/pull/5>
 
-## v1.0.0-20220527 - [Danilo Carolino](@danilogco)
+## [1.0.0] - 2022-05-27
 
-Initial release
+### Added
 
-Build
-
-Refac the project focusing on the newer versions of the Ruby
-language and Ruby on Rails.
+- Initial release
+- Refac the project focusing on the newer versions of the
+Ruby language and Ruby on Rails.
 
 ---------------------
 
