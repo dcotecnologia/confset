@@ -24,10 +24,10 @@ module Confset
 
         result || {}
 
-        rescue Psych::SyntaxError => e
-          raise "YAML syntax error occurred while parsing #{@path}. " \
-                "Please note that YAML must be consistently indented using spaces. Tabs are not allowed. " \
-                "Error: #{e.message}"
+      rescue Psych::SyntaxError => e
+        raise "YAML syntax error occurred while parsing #{@path}. " \
+              "Please note that YAML must be consistently indented using spaces. Tabs are not allowed. " \
+              "Error: #{e.message}"
       end
     end
   end
