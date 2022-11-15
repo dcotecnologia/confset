@@ -10,9 +10,9 @@ Gem::Specification.new do |s|
   s.date             = Time.now.strftime "%F"
   s.authors          = ["Danilo Carolino", "Piotr Kuczynski", "Fred Wu", "Jacques Crocker"]
   s.email            = %w[danilogcarolino@gmail.com]
-  s.summary          = "Effortless multi-environment settings in Rails, Sinatra, Pandrino and others"
+  s.summary          = "Effortless multi-environment settings in Rails, Sinatra, Padrino and others"
   s.description      = "Easiest way to manage multi-environment settings in any ruby project or framework: "
-  + "Rails, Sinatra, Pandrino and others"
+  + "Rails, Sinatra, Padrino and others"
   s.homepage = "https://github.com/dcotecnologia/confset"
   s.required_ruby_version = ">= 2.7.0"
   s.files = Dir["{lib}/**/*"] + ["Rakefile", "CHANGELOG.md", "README.md", "LICENSE.md"]
