@@ -18,3 +18,4 @@ tmp
 .rspec_status
 out
 report.json
+Gemfile.lock

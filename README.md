@@ -29,6 +29,7 @@ for the following interpreters and frameworks:
 
 * Interpreters
   * [Ruby](https://www.ruby-lang.org) `>= 2.7`
+  * Tested versions: 2.7.x, 3.0.x, 3.1.x and 3.2.x
 * Application frameworks
   * Rails `>= 6.0`
   * Padrino
@@ -39,14 +40,14 @@ for the following interpreters and frameworks:
 Add the gem to your `Gemfile` and run `bundle install` to install it:
 
 ```ruby
-gem "confset", "~> 1.0.0"
+gem "confset", "~> 1.0.3"
 ```
 
 You can also install by the GitHub packages server:
 
 ```ruby
 source "https://rubygems.pkg.github.com/dcotecnologia" do
-  gem "confset", "1.0.0"
+  gem "confset", "1.0.3"
 end
 ```
 

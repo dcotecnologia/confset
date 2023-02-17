@@ -7,9 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.3] - 2023-02-17
+
+### Changed
+
+- Update project dependencies by @danilogco
+- Add `ruby v3.2.x` to the test matrix by @danilogco
+
+### Fixed
+
+- Fix indentation warning (rubyconfig#322) by @lygaret
+- Fix typo Padrino (rubyconfig#325) by @ytkg
+- Fix CI setting for Ruby 3.0 (rubyconfig#326) by @ytkg
+- Remove `Gemfile.lock` from the package by @danilogco
+
 ## [1.0.2] - 2022-06-06
 
-### Changes
+### Changed
 
 - Only load Railtie integration if Rails::Railtie is defined
 [rubyconfig#31](https://github.com/rubyconfig/config/pull/319) - Thanks to Ufuk
@@ -18,7 +32,7 @@ Kayserilioglu <ufuk.kayserilioglu@shopify.com>
 
 ## [1.0.1] - 2022-05-30
 
-### Fixes
+### Fixed
 
 - Avoid to crash the Rails application when there is an error
 parsing a variable <https://github.com/dcotecnologia/confset/pull/5>
