@@ -10,6 +10,7 @@ Dir["./spec/support/**/*.rb"].each { |f| require f }
 RSpec.configure do |config|
   # Turn the deprecation warnings into errors, giving you the full backtrace
   config.raise_errors_for_deprecations!
+  config.include FixtureHelper
 
   config.before(:suite) do
     Confset.module_eval do
