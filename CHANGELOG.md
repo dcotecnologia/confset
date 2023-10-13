@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2023-10-13
+
+### Changed
+
+#### Breaking Changes
+
+- `config` no longer loads `deep_merge`'s monkey patch for `Hash#deep_merge` and Hash#deep_merge!`([#342](https://github.com/rubyconfig/config/pull/342)). If you rely on those methods and are not using Rails / Active Support, you can load the monkey patch via`require 'deep_merge/deep_merge_hash'` by @jonathanhefner
+
+### Fixed
+
+- Address edge case with table config param (#339) by @krasnoukhov
+
 ## [1.0.3] - 2023-02-17
 
 ### Changed
@@ -26,8 +38,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Only load Railtie integration if Rails::Railtie is defined
-[rubyconfig#31](https://github.com/rubyconfig/config/pull/319) - Thanks to Ufuk
-Kayserilioglu <ufuk.kayserilioglu@shopify.com>
+  [rubyconfig#31](https://github.com/rubyconfig/config/pull/319) - Thanks to Ufuk
+  Kayserilioglu <ufuk.kayserilioglu@shopify.com>
 - CHANGELOG.md pattern changed to the [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [1.0.1] - 2022-05-30
@@ -35,7 +47,7 @@ Kayserilioglu <ufuk.kayserilioglu@shopify.com>
 ### Fixed
 
 - Avoid to crash the Rails application when there is an error
-parsing a variable <https://github.com/dcotecnologia/confset/pull/5>
+  parsing a variable <https://github.com/dcotecnologia/confset/pull/5>
 
 ## [1.0.0] - 2022-05-27
 
@@ -43,9 +55,9 @@ parsing a variable <https://github.com/dcotecnologia/confset/pull/5>
 
 - Initial release
 - Refac the project focusing on the newer versions of the
-Ruby language and Ruby on Rails.
+  Ruby language and Ruby on Rails.
 
----------------------
+---
 
 You can find the full changelog of the original "config" gem at the link
 <https://github.com/rubyconfig/config/blob/master/CHANGELOG.md>.
