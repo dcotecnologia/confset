@@ -7,7 +7,7 @@ require "confset/sources/yaml_source"
 require "confset/sources/hash_source"
 require "confset/sources/env_source"
 require "confset/validation/schema"
-require "deep_merge"
+require "deep_merge/core"
 
 module Confset
   extend Confset::Validation::Schema
