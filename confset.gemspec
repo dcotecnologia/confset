@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "deep_merge", "~> 1.2", ">= 1.2.1"
   s.add_dependency "dry-validation", "~> 1.10.0", ">= 1.0.0"
-  s.add_development_dependency "rspec", "~> 3.12.0", ">= 3.12.0"
+  s.add_development_dependency "rspec", ">= 3.12.0", "~> 3.13.0"
   s.add_development_dependency "rake", "~> 13.0"
   s.add_development_dependency "simplecov", "~> 0.22.0"
   s.add_development_dependency "mdl", "~> 0.13.0"
