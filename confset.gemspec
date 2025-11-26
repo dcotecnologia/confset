@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rspec", ">= 3.12.0", "~> 3.13.0"
   s.add_development_dependency "rake", "~> 13.0"
   s.add_development_dependency "simplecov", "~> 0.22.0"
-  s.add_development_dependency "mdl", "~> 0.13.0"
+  s.add_development_dependency "mdl", "~> 0.14.0"
   s.add_development_dependency "pry", "~> 0.15.2"
   s.add_development_dependency "rubocop", "~> 1.81.6"
   s.add_development_dependency "rubocop-packaging"
